@@ -16,5 +16,6 @@ int main(int argc, char** argv){
 
   rate("quicksort", quicksort, n);
   rate("heapsort", heapsort, n);
+  rate("insertsort", insertsort, n);
   return 0;
 }

@@ -15,5 +15,6 @@ void rate(char* name, void (*f)(int*, int), int n);
 void quicksort(int *a, int n);
 void quicksort1(int *a, int n);
 void heapsort(int *a, int n);
+void insertsort(int *a, int n);
 
 #endif
