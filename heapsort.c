@@ -1,36 +1,45 @@
 
 #include "arr.h"
 
-void heapadjust(int *a, int n, int i) {
+int less(int x, int y) { return x < y; }
+
+int more(int x, int y) { return x > y; }
+
+typedef int (*CMPT)(int, int);
+
+void heapadjust(int *arr, int n, int i, CMPT cmp) {
   // tt++;
-  while(1){
-    int p = i;
+  while (1) {
+    int cmpest = i;
     int l = 2 * i + 1;
     int r = l + 1;
-    if (l < n) if (a[p] < a[l]) p = l;
-    if (r < n) if (a[p] < a[r]) p = r;
+    if (l < n && cmp(arr[l], arr[cmpest]))
+      cmpest = l;
+    if (r < n && cmp(arr[r], arr[cmpest]))
+      cmpest = r;
 
-    if (p == i) {
+    if (cmpest == i) {
       return;
     } else {
-      swap(&a[i], &a[p]);
-      i = p;
+      swap(&arr[i], &arr[cmpest]);
+      i = cmpest;
     }
   }
 }
 
-void _makeheap(int *a, int n, int i) {
+void makeheap(int *arr, int n, CMPT cmp) {
+  int i = (n + 1) / 2 + 1;
   while (i >= 0) {
-    heapadjust(a, n, i);
+    heapadjust(arr, n, i, cmp);
     i = i - 1;
   }
 }
 
-void heapsort(int *a, int n) {
-  _makeheap(a, n, ((n) + 1) / 2 + 1);
-  while(n>1){
-    swap(&a[0], &a[n - 1]);
-    heapadjust(a, n - 1, 0);
+void heapsort(int *arr, int n) {
+  makeheap(arr, n, more);
+  while (n > 1) {
+    swap(&arr[0], &arr[n - 1]);
+    heapadjust(arr, n - 1, 0, more);
     n = n - 1;
   }
 }
